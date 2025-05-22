@@ -4,6 +4,6 @@ app = FastAPI()
 
 @app.get('/')
 async def read_root():
-    return {"msg": "Lu Api2"}
+    return {"msg": "Lu Api"}
 
 

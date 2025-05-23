@@ -54,7 +54,7 @@ class ProductOrder(Base):
     __tablename__:str = "product_order"
 
     id = Column(Integer,primary_key=True)
-    order_id = Column(Integer,ForeignKey("order.id"))
+    order_id = Column(Integer,ForeignKey("orders.id"))
     product_id = Column(Integer,ForeignKey("products.id"))
     amount = Column(Integer,nullable=False)
 

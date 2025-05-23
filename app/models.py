@@ -13,6 +13,7 @@ class Client(Table_base):
     __tablename__:str = "clients"
     
     email = Column(String(length=50),unique=True)
+    cpf = Column(String(length=20),unique=True)
     password = Column(String(length=100))
     role = Column(String(length=50))
 

@@ -10,7 +10,7 @@ class Table_base(Base):
     name = Column(String(length=200))
 
 class Client(Table_base):
-    __tablename__ = "clients"
+    __tablename__:str = "clients"
     
     email = Column(String(length=50),unique=True)
     password = Column(String(length=100))
@@ -25,15 +25,15 @@ class Product(Table_base):
     section = Column(String)
     code_bar = Column(String(length=50))
     categroy= Column(String)
-    initial_stock =Column(Integer)
+    initial_stock =Column(Integer,default=0)
     actual_stock = Column(Integer,default=0)
     due_date = Column(String)
-    price = Column(Numeric(10,2))
+    price = Column(Numeric(10,2),nullable=False)
 
     images = relationship("Image",back_populates="product",cascade="all,delete-orphan")
 
 class Image(Table_base):
-    __tablename__ = "images"
+    __tablename__:str = "images"
 
     data = Column(LargeBinary)
     product_id = Column(Integer,ForeignKey("products.id"))
@@ -51,6 +51,8 @@ class Order(Table_base):
     products = relationship("ProductOrder",back_populates="order",cascade="all,delete")
 
 class ProductOrder(Base):
+    __tablename__:str = "product_order"
+
     id = Column(Integer,primary_key=True)
     order_id = Column(Integer,ForeignKey("order.id"))
     product_id = Column(Integer,ForeignKey("products.id"))

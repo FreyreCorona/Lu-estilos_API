@@ -1,7 +1,7 @@
 
 services:
   db:
-    image: postgres:16
+    image: postgres:17
     container_name: lu_db
     restart: always
     env_file:

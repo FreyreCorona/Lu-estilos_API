@@ -1,20 +1,97 @@
-from pydantic import BaseModel
-from pydantic_sqlalchemy import sqlalchemy_to_pydantic
-import app.models as models 
+from typing import List, Optional
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+from decimal import Decimal
 
-#GET Schemas
-Client = sqlalchemy_to_pydantic(models.Client)
-Product = sqlalchemy_to_pydantic(models.Product)
-Order = sqlalchemy_to_pydantic(models.Order)
-Image = sqlalchemy_to_pydantic(models.Image)
-ProductOrder = sqlalchemy_to_pydantic(models.ProductOrder)
 
-#POST Schemas
-ClientCreate = sqlalchemy_to_pydantic(models.Client,exclude=['id'])
-ProductCreate = sqlalchemy_to_pydantic(models.Product,exclude=['id'])
-OrderCreate = sqlalchemy_to_pydantic(models.Order,exclude=['id'])
-ImageCreae = sqlalchemy_to_pydantic(models.Image,exclude=['id'])
-ProductOrderCreate = sqlalchemy_to_pydantic(models.ProductOrder,exclude=['id'])
+# === IMAGE ===
+class ImageBase(BaseModel):
+    name: str
+
+class ImageCreate(ImageBase):
+    data: bytes
+    product_id: int
+
+class ImageRead(ImageBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+# === PRODUCT ===
+class ProductBase(BaseModel):
+    name: str
+    description: Optional[str]
+    section: Optional[str]
+    code_bar: Optional[str]
+    categroy: Optional[str]
+    initial_stock: Optional[int] = 0
+    actual_stock: Optional[int] = 0
+    due_date: Optional[str]
+    price: Decimal
+
+class ProductCreate(ProductBase):
+    pass
+
+class ProductRead(ProductBase):
+    id: int
+    images: List[ImageRead] = []
+
+    class Config:
+        orm_mode = True
+
+
+# === CLIENT ===
+class ClientBase(BaseModel):
+    name: str
+    email: EmailStr
+    cpf: str
+    role: Optional[str] = "user"
+
+class ClientCreate(ClientBase):
+    password: str
+
+class ClientRead(ClientBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+# === PRODUCT ORDER ===
+class ProductOrderBase(BaseModel):
+    product_id: int
+    amount: int
+
+class ProductOrderCreate(ProductOrderBase):
+    order_id: int
+
+class ProductOrderRead(ProductOrderBase):
+    id: int
+    product: ProductRead
+
+    class Config:
+        orm_mode = True
+
+
+# === ORDER ===
+class OrderBase(BaseModel):
+    name: str
+    status: Optional[str] = "pending"
+
+class OrderCreate(OrderBase):
+    client_id: int
+    products: List[ProductOrderCreate]
+
+class OrderRead(OrderBase):
+    id: int
+    date: datetime
+    client: ClientRead
+    products: List[ProductOrderRead]
+
+    class Config:
+        orm_mode = True
 
 class ClientLogin(BaseModel):
     email:str

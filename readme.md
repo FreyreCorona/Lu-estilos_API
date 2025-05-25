@@ -21,13 +21,22 @@
 ```bash
 Lu-estilos_API/
  app/
- main.py            # Application entry point
- models/            # Data models definitions
- schemas/           # Pydantic schemas
- routers/           # API routes
- services/          # Business logic
- alembic/               # Database migrations
- tests/                 # Unit and integration tests
+  auth.py.           # Authorization logic and endpoints 
+  client.py.         # Clients logic and endpoints
+  database.py.       # Database definition
+  orders.py.         # Orders logic and endpoints
+  products.py        # Products logic and endpoints
+  main.py            # Application entry point
+  models.py            # Data models definitions
+  schemas.py          # Pydantic schemas
+ 
+alembic/                # Database migrations
+ tests/                 # Unit and integration.      tests
+   conftest.py.          # Configuration for test(reset the database on finish)
+   test_auth.py.        # Test for auth endpoints
+   test_client.py.      # Test for client endpoints 
+   test_order.py.       # Test for orders endpoints 
+   test_product.py.     # test for products endpoints 
  docker-compose.yml     # Docker Compose configuration
  Dockerfile             # Docker image definition
  requirements.txt       # Project dependencies

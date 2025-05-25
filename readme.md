@@ -5,7 +5,7 @@
 
 ---
 
-## Technologies Used
+# Technologies Used
 
 - **FastAPI**: Modern and high-performance framework for building APIs with Python.
 - **SQLAlchemy**: ORM for interacting with relational databases.
@@ -16,7 +16,7 @@
 
 ---
 
-##  Project Structure
+# Project Structure
 
 ```bash
 Lu-estilos_API/

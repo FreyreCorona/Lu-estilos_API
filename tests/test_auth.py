@@ -1,23 +1,26 @@
+from random import choice
 import pytest
-from httpx import AsyncClient
+from httpx import AsyncClient,ASGITransport
 from app.main import app
-
+from random import choice
 @pytest.mark.asyncio
 async def test_register_and_login():
-    async with AsyncClient(app=app, base_url="http://test") as ac:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
+        rnd_email = f"test{str(choice([10,99]))}@example.com"
         # Registro
         response = await ac.post("/auth/register", json={
             "name": "Test User",
-            "email": "test@example.com",
-            "cpf": "12345678900",
+            "email": rnd_email,
+            "cpf": f"{str(choice([100000000,999999999]))}",
             "role": "user",
             "password": "senha123",
         })
+        print(response.json())
         assert response.status_code == 200
 
         # Login
         response = await ac.post("/auth/login", json={
-            "email": "test@example.com",
+            "email": rnd_email,
             "password": "senha123"
         })
         assert response.status_code == 200

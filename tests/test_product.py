@@ -1,5 +1,5 @@
 import pytest
-from httpx import AsyncClient
+from httpx import AsyncClient,ASGITransport
 from app.main import app
 from app import models
 from app.database import session_local
@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 @pytest.mark.asyncio
 async def test_full_product_crud():
-    async with AsyncClient(app=app, base_url="http://test") as ac:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Registrar e logar admin
         await ac.post("/auth/register", json={
             "name": "Admin",
@@ -31,22 +31,23 @@ async def test_full_product_crud():
         headers = {"Authorization": f"Bearer {token}"}
 
         # POST /products
-        create = await ac.post("/products", json={
+        create = await ac.post("/products/", json={
             "name": "producto 1",
             "description": "Tênis",
-            "section": 199.90,
+            "section": "calçados",
             "code_bar": "1234567890123",
             "categroy": "esportivo",
             "initial_stock": 15,
             "actual_stock": 15,
             "due_date": f"{datetime.now(timezone.utc)}",
-            "category": "esportivo"
+            "category": "esportivo",
+            "price": 4000.50,
         }, headers=headers)
         assert create.status_code == 200
         product_id = create.json()["id"]
 
         # GET /products
-        response = await ac.get("/products", headers=headers)
+        response = await ac.get("/products/", headers=headers)
         assert response.status_code == 200
         assert len(response.json()) > 0
 
@@ -57,12 +58,15 @@ async def test_full_product_crud():
 
         # PUT /products/{id}
         update = await ac.put(f"/products/{product_id}", headers=headers, json={
+            "name":"prducto 1",
             "description": "Tênis atualizado",
-            "price": 219.90,
-            "code_bar": "1234567890123",
             "section": "calçados",
+            "code_bar": "1234567890123",
+            "category": "casual",
+            "initial_stock": 15,
             "actual_stock": 10,
-            "category": "casual"
+            "due_date": f"{datetime.now(timezone.utc)}",
+            "price": 219.90,
         })
         assert update.status_code == 200
         assert update.json()["description"] == "Tênis atualizado"

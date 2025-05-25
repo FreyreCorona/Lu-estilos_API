@@ -44,7 +44,7 @@ Lu-estilos_API/
    cd Lu-estilos_API
    ```
 
-2. Copy the `.env` file with the required environment variables.
+2. Copy the `.env` file and set the environment variables as you like
 
 3. Build and start the containers using Docker Compose:
    ```bash

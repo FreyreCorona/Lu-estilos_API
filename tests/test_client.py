@@ -1,6 +1,8 @@
 import pytest
 from httpx import AsyncClient
 from app.main import app
+from app.database import session_local
+from sqlalchemy.orm import Session
 
 @pytest.mark.asyncio
 async def test_full_client_crud():
@@ -60,8 +62,7 @@ async def test_full_client_crud():
             "password": "adminpass"
         })
         # Forzar admin na DB o teste manual
-        from app.database import SessionLocal
-        db = SessionLocal()
+        db:Session = session_local()
         admin = db.query(app.models.Client).filter_by(email="admin@example.com").first()
         admin.role = "admin"
         db.commit()

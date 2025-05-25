@@ -27,20 +27,20 @@ Lu-estilos_API/
   orders.py.         # Orders logic and endpoints
   products.py        # Products logic and endpoints
   main.py            # Application entry point
-  models.py            # Data models definitions
-  schemas.py          # Pydantic schemas
+  models.py          # Data models definitions
+  schemas.py         # Pydantic schemas
  
-alembic/                # Database migrations
- tests/                 # Unit and integration.      tests
-   conftest.py.          # Configuration for test(reset the database on finish)
-   test_auth.py.        # Test for auth endpoints
-   test_client.py.      # Test for client endpoints 
-   test_order.py.       # Test for orders endpoints 
-   test_product.py.     # test for products endpoints 
- docker-compose.yml     # Docker Compose configuration
- Dockerfile             # Docker image definition
- requirements.txt       # Project dependencies
- .env                   # Environment variables (uploaded only for educational proposal)
+ alembic/            # Database migrations
+ tests/              # Unit and integration.      tests
+  conftest.py.       # Configuration for test(reset the database on finish)
+  test_auth.py.      # Test for auth endpoints
+  test_client.py.    # Test for client endpoints 
+  test_order.py.     # Test for orders endpoints 
+  test_product.py.   # test for products endpoints 
+ docker-compose.yml  # Docker Compose configuration
+ Dockerfile          # Docker image definition
+ requirements.txt    # Project dependencies
+ .env                # Environment variables (uploaded only for educational proposal)
 ```
 
 ---

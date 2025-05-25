@@ -10,7 +10,7 @@ async def test_register_and_login():
             "name": "Test User",
             "email": "test@example.com",
             "cpf": "12345678900",
-            "role": "user"
+            "role": "user",
             "password": "senha123",
         })
         assert response.status_code == 200

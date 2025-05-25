@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app import auth,client,products
+from app import auth,client,products,orders
 from fastapi.openapi.utils import get_openapi
 
 app = FastAPI()
@@ -7,6 +7,7 @@ app = FastAPI()
 app.include_router(auth.router)
 app.include_router(client.router)
 app.include_router(products.router)
+app.include_router(orders.router)
 
 @app.get('/')
 async def read_root():

@@ -4,10 +4,9 @@ from typing import List, Optional
 from app import database, models, schemas
 from app.auth import get_current_user, get_admin_user
 from sqlalchemy.exc import IntegrityError
-
+from app.database import get_db
 router = APIRouter(prefix="/products", tags=["Products"])
 
-get_db = database.get_db
 
 @router.get("/", response_model=List[schemas.ProductRead])
 def list_products(

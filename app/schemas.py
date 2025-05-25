@@ -6,7 +6,7 @@ from decimal import Decimal
 
 # === IMAGE ===
 class ImageBase(BaseModel):
-    name: str
+    name: Optional[str]
 
 class ImageCreate(ImageBase):
     data: bytes
@@ -77,8 +77,11 @@ class ProductOrderRead(ProductOrderBase):
 
 # === ORDER ===
 class OrderBase(BaseModel):
-    name: str
+    name: Optional[str]
     status: Optional[str] = "pending"
+
+class OrderUpdate(OrderBase):
+    pass
 
 class OrderCreate(OrderBase):
     client_id: int

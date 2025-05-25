@@ -77,6 +77,7 @@ def login(user:ClientLogin,db:Session = Depends(get_db)):
     db_user = db.query(Client).filter(Client.email == user.email).first()
     if not db_user or not verify_password(user.password,db_user.password):
         raise HTTPException(status_code=400,detail="User o password incorrectos")
+    print(user.email,user.password)
     token = create_access_token(data={"sub":db_user.email})
     return {"access_token":token,"token_type":"bearer"}
 
